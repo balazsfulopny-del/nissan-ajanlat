@@ -57,7 +57,7 @@ table.pf{border-collapse:collapse;width:100%;font-size:14px}table.pf th,table.pf
 <label>Forgalomba helyezési díj<input id="reg" type="text" inputmode="numeric" autocomplete="off" class="amt"></label>
 <label>Várható átvétel<input id="del"></label>
 <label>Ajánlat érvényes eddig<input id="val" type="date"></label>
-<label>Ajánlatszám<input id="no"></label>
+<label>Ajánlatszám<input id="no" title="A végleges számot a PDF készítésekor a közös Google számláló adja"></label>
 <label>Konkrét autó alvázszáma (opcionális)<input id="vin" maxlength="24" placeholder="pl. SJNFAAJ12U1234567"></label></div>
 <label style="margin-top:10px">Címsor az autó fölött<input id="hl"></label></fieldset>
 <fieldset><legend>HAVI RÉSZLET (opcionális, tájékoztató)</legend>
@@ -102,7 +102,7 @@ const biGet=(m,c,my)=>BI[m+"|"+my+"|"+c]||BI[m+"|"+c]||BI[BA[m+"|"+c]]||null;
 <script>
 const $=i=>document.getElementById(i),slug=s=>s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
 const ft=n=>(n<0?'−':'')+String(Math.abs(n)).replace(/\B(?=(\d{3})+(?!\d))/g,'\u00a0')+'\u00a0Ft';
-const msg=t=>{const m=$('msg');m.textContent=t;m.style.display='block';clearTimeout(msg.t);msg.t=setTimeout(()=>m.style.display='none',3500)};
+const msg=(t,ms)=>{const m=$('msg');m.textContent=t;m.style.display='block';clearTimeout(msg.t);msg.t=setTimeout(()=>m.style.display='none',ms||3500)};
 const NS="N-Sport",CO="Comfort",A="Acenta",N="N-Connecta",T="Tekna",TP="Tekna Plus",ND="N-Design",NT="N-Trek",EN="Engage",EP="Engage Plus",AD="Advance",EV="Evolve",PU="Pulse";
 const col=(a,p,t)=>a.map(([n,c])=>({n,c,p,t})),o=(n,p,t,pt)=>({n,p,t,pt});
 const QTT=[["Gyöngyházfehér / Fekete","XKJ"],["Kék / Fekete","XGZ"],["Naplementevörös / Fekete","YAU"],["Szürke / Fekete","XEX"],["Mélyóceán / Fekete","YBJ"]];
@@ -332,8 +332,17 @@ async function syNow(manual){
  catch(e){const o=syGet();o.err=String(e&&e.name==='AbortError'?'nem válaszolt időben':e&&e.message||e).slice(0,120);sySet(o);if(manual)msg('A szinkron nem sikerült: '+o.err)}
  finally{syBusy=0;syStat();try{warnShow()}catch(e){}if(syAgain){syAgain=0;sySoon()}}}
 /* közös ajánlatszám: PDF előtt a szkript ad egy még ki nem adott sorszámot (ha nincs internet, marad a helyi) */
-async function syNum(){try{if(typeof gasOk!=='function'||!gasOk()||syOff())return;const v=$('no').value,m=/^AJ-(\d{4})-(\d+)$/.exec(v);if(!m||+m[2]!==(cfg.counter||0)+1)return;
- const r=await gpostT({a:'szam',min:cfg.counter||0},8000);const n=r&&r.ok?Math.floor(+r.n):0;if(n>0&&n<=99999999){cfg.counter=n-1;$('no').value='AJ-'+m[1]+'-'+String(n).padStart(4,'0')}}catch(e){}}
+/* v36: közös ajánlatszám a Google táblából. Minden automatikus (AJ-év-sorszám) számot PDF előtt a szkript ad ki zárolva,
+ * a tábla, a szinkron előzmények és minden eszköz számlálója közül a legnagyobb + 1. Ha nem érhető el, nincs PDF (nincs helyi szám, így nincs ütközés).
+ * Kézzel beírt vagy előzményből betöltött számot nem cserél le. */
+let noKeep='';
+const histMax=()=>{let x=0;try{hget().forEach(h=>{const m=/^AJ-\d{4}-(\d{1,5})$/.exec(String(h.no||'').trim());if(m&&+m[1]>x)x=+m[1]})}catch(e){}return x};
+async function syNum(){const v=$('no').value.trim(),m=/^AJ-(\d{4})-(\d+)$/.exec(v);if(!m||v===noKeep)return false;
+ const er=t=>{const e=new Error('Nem kaptam ajánlatszámot a Google táblából ('+t+'). A PDF nem készült el, hogy ne legyen két azonos szám. Ellenőrizd a netet, és próbáld újra.');e.num=1;return e};
+ if(typeof gasOk!=='function'||!gasOk())throw er('nincs Google kapcsolat beállítva');
+ let r=null;try{r=await gpostT({a:'szam',min:Math.max(cfg.counter||0,histMax())},15000)}catch(e){throw er(e&&e.name==='AbortError'?'a Google nem válaszolt időben':'nincs internet kapcsolat')}
+ const n=r&&r.ok?Math.floor(+r.n):0;if(!(n>0&&n<=99999999))throw er(r&&r.err?'Google: '+String(r.err).slice(0,80):'hibás válasz');
+ cfg.counter=n-1;$('no').value='AJ-'+new Date().getFullYear()+'-'+String(n).padStart(4,'0');return true}
 let cfg;try{const sv=JSON.parse(localStorage.getItem('nc')||'null');cfg=Object.assign({},DEF,sv&&typeof sv==='object'&&!Array.isArray(sv)?sv:{});if(!sv||sv.ver!==13||modelErr(cfg.models)){cfg.models=structuredClone(DEF.models)}cfg.ver=13;if(sv&&sv.reg===95000)cfg.reg=260000;if(cfg.headline==='Az Ön személyre szabott ajánlata')cfg.headline='Az Ön új autója';if(cfg.gasv!==33){cfg.gas=DEF.gas;cfg.gkey=DEF.gkey;cfg.gasv=33}fixCfg()}catch(e){cfg=structuredClone(DEF)}
 const save=()=>{try{localStorage.setItem('nc',JSON.stringify(cfg))}catch(e){}try{syCfgTrack()}catch(e){}};save()
 const dbp=new Promise(r=>{try{const q=indexedDB.open('nimg',1);q.onupgradeneeded=()=>q.result.createObjectStore('i');q.onsuccess=()=>r(q.result);q.onerror=()=>r(null)}catch(e){r(null)}});
@@ -374,7 +383,7 @@ const FIDS=['cn','ca','ct','ce','s0','s1','s2','s3','eq','disc','exl','exp','reg
 const snap=()=>({mv:12,sel:Object.fromEntries(FSEL.map(i=>[i,$(i).value])),ops:[...document.querySelectorAll('#ops input')].map(c=>c.checked),v:Object.fromEntries(FIDS.map(i=>[i,String($(i).value).slice(0,i==='eq'?8000:1000)])),c:Object.fromEntries(FCK.map(i=>[i,$(i).checked]))});
 function restore(st){try{const S=st.sel;let mi=+S.mod;if(!st.mv&&mi>=2)mi=mi===2?1:mi-1;$('mod').value=mi;fillPt();$('pt').value=S.pt;fillTr();$('var').value=S.var;fillCol();$('col').value=S.col;fillSpecs();
  document.querySelectorAll('#ops input').forEach((c,i)=>c.checked=!!st.ops[i]);
- FIDS.forEach(i=>{if(st.v[i]!==undefined)$(i).value=st.v[i]});FCK.forEach(i=>$(i).checked=!!st.c[i]);calc();imgSt();tabs(0);msg('Ajánlat betöltve, módosíthatod és újra elkészítheted')}catch(e){msg('Az ajánlat nem tölthető be (a kínálat időközben megváltozott)')}}
+ FIDS.forEach(i=>{if(st.v[i]!==undefined)$(i).value=st.v[i]});noKeep=$('no').value.trim();FCK.forEach(i=>$(i).checked=!!st.c[i]);calc();imgSt();tabs(0);msg('Ajánlat betöltve, módosíthatod és újra elkészítheted')}catch(e){msg('Az ajánlat nem tölthető be (a kínálat időközben megváltozott)')}}
 function hist(){const SL=new Map(slog().map(y=>[y.id,y])),q=($('hq').value||'').toLowerCase(),a=hget(),td=new Date().toISOString().slice(0,10),in3=new Date(Date.now()+3*864e5).toISOString().slice(0,10),el=$('hlist');el.innerHTML='';
  const soon=a.filter(x=>x.val>=td&&x.val<=in3).length,old=a.filter(x=>x.val<td).length;$('hn').textContent=a.length?a.length+' ajánlat elmentve. '+(soon?soon+' ajánlat 3 napon belül lejár. ':'')+(old?old+' ajánlat érvényessége lejárt.':''):'Még nincs elmentett ajánlat. Minden elkészített PDF ide is bekerül.';
  a.filter(x=>!q||(x.no+' '+x.cust+' '+x.car+' '+(x.rm&&x.rm.tel||'')+' '+String(x.rm&&x.rm.tel||'').replace(/\D/g,'')).toLowerCase().includes(q)).forEach(x=>{const r=document.createElement('div');r.className='im';const exp=x.val<td,sn=!exp&&x.val<=in3,sp=document.createElement('span');sp.style.flex='1 1 220px';sp.innerHTML='<b></b><br><small></small>';sp.firstChild.textContent=(x.cust||'(név nélkül)')+' · '+x.car;const lg=SL.get(x.id),ss=lg?lg.s:'nyitott';sp.lastChild.textContent=x.no+' · '+ft(x.total)+(ss==='nyitott'?' · érvényes: '+fdate(x.val)+'-ig'+(exp?' · LEJÁRT':sn?' · hamarosan lejár':''):'');if(lg&&lg.fu&&ss==='nyitott'&&(lg.fu2||lg.fu)>=td){const z=document.createElement('span');z.textContent=lg.fo?' · utánkövetés kikapcsolva':' · utánkövetés: '+[lg.fu,lg.fu2].filter(v=>v&&v>=td).map(fdate).join(', ');sp.lastChild.appendChild(z)}if(exp&&ss==='nyitott')sp.lastChild.style.color='#c3002f';if(ss!=='nyitott'){const z=document.createElement('span');z.className=ss==='szerzodes'?'st-s':'st-e';z.textContent=ss==='szerzodes'?' · SZERZŐDÉS'+(lg.sd?' ('+fdate(lg.sd)+')':''):' · ELVESZETT';sp.lastChild.appendChild(z)}const sv=document.createElement('select');sv.style.cssText='width:auto;margin:0;padding:8px';[['nyitott','Nyitott'],['szerzodes','Szerződés lett'],['elveszett','Elveszett']].forEach(([v,l])=>{const o=document.createElement('option');o.value=v;o.textContent=l;sv.appendChild(o)});sv.value=ss;sv.disabled=!lg;sv.onchange=()=>{if(setStatus(x.id,sv.value)===false)sv.value=ss;hist()};
@@ -489,10 +498,10 @@ const gdl=async()=>{try{return typeof claude!=='undefined'&&claude&&claude.use?a
 const dlf=(b,fn)=>{const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=fn;document.body.appendChild(a);a.click();setTimeout(()=>{a.remove();URL.revokeObjectURL(a.href)},4000)};
 const syncCounter=()=>{try{const sv=JSON.parse(localStorage.getItem('nc')||'null'),n=sv?Math.floor(+sv.counter):NaN;if(isFinite(n)&&n>(cfg.counter||0)){const auto=/^AJ-\d{4}-\d+$/.test($('no').value)&&+$('no').value.split('-')[2]<=n;cfg.counter=n;if(auto)$('no').value='AJ-'+new Date().getFullYear()+'-'+String(n+1).padStart(4,'0')}}catch(e){}};
 window.addEventListener('storage',e=>{if(e.key==='nc')syncCounter()});
-async function out(share){if(out.busy)return;out.busy=1;try{fixCfg();syncCounter();await syNum();const b=await pdf();cfg.counter=(cfg.counter||0)+1;save();const rm=rec();const fn='Nissan_ajanlat_'+$('no').value+'_'+slug($('cn').value||'ugyfel')+'.pdf';let done=false;
+async function out(share){if(out.busy)return;out.busy=1;try{fixCfg();syncCounter();const got=await syNum();const b=await pdf();if(got)cfg.counter=(cfg.counter||0)+1;save();const rm=rec();const fn='Nissan_ajanlat_'+$('no').value+'_'+slug($('cn').value||'ugyfel')+'.pdf';let done=false;
  if(share&&navigator.canShare&&typeof File!=='undefined'){const f=new File([b],fn,{type:'application/pdf'});if(navigator.canShare({files:[f]})){try{await navigator.share({files:[f],title:fn});done=true}catch(e){if(e&&e.name==='AbortError')done=true}}}
  if(!done){const dl=await gdl();if(dl)await dl.save({filename:fn,data:b});else dlf(b,fn);msg('PDF elkészült')}
- remAfter(rm);try{mailOffer(b,fn,rm,false)}catch(e){};$('no').value='AJ-'+new Date().getFullYear()+'-'+String(cfg.counter+1).padStart(4,'0')}catch(e){if(e&&e.code=='declined')return;console.error(e);msg('Hiba a PDF készítésekor: '+(e.message||e.code))}finally{out.busy=0}}
+ remAfter(rm);try{mailOffer(b,fn,rm,false)}catch(e){};$('no').value='AJ-'+new Date().getFullYear()+'-'+String(cfg.counter+1).padStart(4,'0')}catch(e){if(e&&e.code=='declined')return;console.error(e);if(e&&e.num){msg(e.message,9000);return}msg('Hiba a PDF készítésekor: '+(e.message||e.code))}finally{out.busy=0}}
 $('mk').onclick=()=>out(false);$('shr').onclick=()=>out(true);
 function buildSet(){gstat();pinStat();$('gasu').value=cfg.gas||'';$('gkeyu').value=cfg.gkey||'';$('gct').value=$('gascode').textContent.trim();const g=$('sf');if(g.children.length)return;SF.forEach(([k,l])=>{const lb=document.createElement('label');lb.textContent=l;const i=document.createElement(k=='legal'||k=='mailBody'?'textarea':'input');i.id='c_'+k;i.value=cfg[k];if(k=='legal')i.style.minHeight='80px';if(k=='mailBody')i.style.minHeight='240px';if(k=='reg')amtEl(i);i.oninput=()=>{cfg[k]=['vat','reg','deposit','days','rem','remd','fu1','fu2'].includes(k)?clmp(i.value,-2e9,2e9):i.value;save()};lb.appendChild(i);g.appendChild(lb)});$('cat').value=JSON.stringify(cfg.models,null,1);fillIm();list()}
 $('gasu').oninput=()=>{cfg.gas=$('gasu').value.trim();save();gstat()};$('gkeyu').oninput=()=>{cfg.gkey=$('gkeyu').value.trim();save()};
@@ -546,7 +555,7 @@ lockNow();
 const rcFind=t=>{const k=telK(t);if(!k)return[];return hget().filter(x=>telK(x.rm&&x.rm.tel||x.st&&x.st.v&&x.st.v.ct)===k)};
 function rcCheck(){const a=rcFind($('ct').value),b=$('rc');if(!a.length){b.style.display='none';return}const x=a[0],SL=new Map(slog().map(y=>[y.id,y])),stt=y=>{const l=SL.get(y.id),s=l?l.s:'nyitott';return s==='szerzodes'?'szerződés lett':s==='elveszett'?'elveszett':'nyitott'};const nsz=a.filter(y=>stt(y)==='szerződés lett').length;
  $('rci').textContent=(a.length===1?'1 korábbi ajánlat':a.length+' korábbi ajánlat')+(nsz?', ebből '+nsz+' szerződés':'')+'. Legutóbb: '+fdate(ymd(new Date(x.id)))+', '+(x.cust||'(név nélkül)')+', '+x.car+', '+ft(x.total)+' ('+x.no+', '+stt(x)+').';b.style.display='block';rcCheck.a=a}
-let rcT=0;$('ct').addEventListener('input',()=>{clearTimeout(rcT);rcT=setTimeout(rcCheck,250)});
+$('no').addEventListener('input',()=>{noKeep=$('no').value.trim()});let rcT=0;$('ct').addEventListener('input',()=>{clearTimeout(rcT);rcT=setTimeout(rcCheck,250)});
 $('rcl').onclick=()=>{const a=rcCheck.a;if(a&&a[0]&&a[0].st){restore(a[0].st);$('rc').style.display='none'}};
 $('rch').onclick=()=>{const t=telK($('ct').value);tabs(2);$('hq').value=t;hist()};
 fillModels();fresh();slog();setTimeout(()=>qflush(),1500);
@@ -639,7 +648,7 @@ const appKey=()=>{try{const m=/[#&]k=([0-9a-f]{32})/.exec(location.hash);if(m){c
 if(IS_APP){appKey();window.addEventListener('hashchange',appKey);
  try{if('serviceWorker' in navigator&&(location.protocol==='https:'||location.hostname==='localhost'))navigator.serviceWorker.register('sw.js').catch(()=>{})}catch(e){}}
 </script>
-<script type="text/plain" id="gascode">/* Nissan ajánlatkészítő v35, Google kapcsolat (Nyitrai Autóház)
+<script type="text/plain" id="gascode">/* Nissan ajánlatkészítő v36, Google kapcsolat (Nyitrai Autóház)
  * Feladata: 1) az ajánlat után naptári esemény a saját Google Naptárba,
  * 2) minden ajánlat és szerződés naplózása egy Google Táblázatba,
  * 2b) utánkövetés: a visszahívás után két további naptári esemény, ha nincs szerződés (szerződésnél, elveszettnél törlődnek),
@@ -647,7 +656,7 @@ if(IS_APP){appKey();window.addEventListener('hashchange',appKey);
  * 4) e-mail piszkozat a Gmailben az ajánlat PDF-fel, alján a digitális névjegy képpel (elküldeni csak a felhasználó tudja, a Gmailben),
  * 5) heti biztonsági mentés a Google Drive "Nissan ajánlat mentések" mappájába (az utolsó 8 marad meg),
  * 6) hétfőnként reggel 6-kor megnézi a nissan.hu árlista oldalát, és jelzi az appnak, ha új vagy megváltozott árlista PDF jelent meg (az árakat nem írja át),
- * 7) szinkron a gépek között: előzmények, státuszok és beállítások a Drive "Nissan ajánlat szinkron" mappájában (a PIN kivételével), közös ajánlatszám számláló,
+ * 7) szinkron a gépek között: előzmények, státuszok és beállítások a Drive "Nissan ajánlat szinkron" mappájában (a PIN kivételével), közös ajánlatszám számláló (v36: a tábla és a szinkron legnagyobb számától folytatja, minden eszköz innen kap számot),
  * 8) mobil: egy külön, csak a tulajdonosnak elérhető bevezetés (Hozzáférés: csak én) a böngészőben megnyitja a programot a Drive-ról.
  * Beállítás: futtasd egyszer a "beallitas" függvényt, majd tedd közzé webalkalmazásként
  * (Végrehajtás: én, Hozzáférés: bárki). A kapott /exec címet másold az app Beállításaiba. */
@@ -821,7 +830,7 @@ function doPost(e) {
       return valasz_({ ok: true, t: mt, n: ht.length });
     }
     if (d.a === 'szam') {
-      var ps = PropertiesService.getScriptProperties(), c = Math.max(Number(ps.getProperty('SZAMLALO')) || 0, Math.floor(Number(d.min)) || 0) + 1;
+      var ps = PropertiesService.getScriptProperties(), c = Math.max(Number(ps.getProperty('SZAMLALO')) || 0, (function (m) { return m > 0 && m <= 99999 ? m : 0; })(Math.floor(Number(d.min)) || 0), legnagyobbSzam_(sh)) + 1;
       if (c > 99999999) return valasz_({ ok: false, err: 'hibás számláló' });
       ps.setProperty('SZAMLALO', String(c));
       return valasz_({ ok: true, n: c });
@@ -830,6 +839,14 @@ function doPost(e) {
   } catch (err) {
     return valasz_({ ok: false, err: String(err && err.message || err) });
   } finally { if (zarva) lock.releaseLock(); }
+}
+/* v36: a már kiadott legnagyobb ajánlatszám (AJ-év-sorszám) a táblában és a szinkron előzményekben,
+ * így régi, csak helyi számlálóval készült ajánlatok után sem ad ki újra azonos számot. 5 jegynél hosszabb (elírt) számot nem vesz figyelembe. */
+function legnagyobbSzam_(sh) {
+  var mx = 0, re = /^AJ-\d{4}-(\d{1,5})$/, nez = function (v) { var m = re.exec(String(v || '').trim()); if (m && Number(m[1]) > mx) mx = Number(m[1]); };
+  try { var n = sh.getLastRow(); if (n > 1) sh.getRange(2, 3, n - 1, 1).getValues().forEach(function (r) { nez(r[0]); }); } catch (x) {}
+  try { var o = szinkOlvas_(szinkFajl_()); Object.keys(o.h).forEach(function (id) { nez(o.h[id].x && o.h[id].x.no); }); } catch (x) {}
+  return mx;
 }
 /* Szinkron: egy JSON fájl a Drive-on. Minden rekord mellett a szerver változatszáma (r),
  * a kliens csak az utolsó lekérése óta változottakat kapja meg. Ütközésnél a később módosított (u) nyer. */
