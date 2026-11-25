@@ -90,7 +90,7 @@ table.pf{border-collapse:collapse;width:100%;font-size:14px}table.pf th,table.pf
 <fieldset><legend>MENTÉS ÉS ÁTVITEL</legend>
 <p class="note">A mentési csomag (ZIP) a beállításokat és a képeket tartalmazza. Így viheted át a telefonra vagy másik gépre.</p>
 <p><button class="s" id="ex">Mentési csomag letöltése</button> <label style="display:inline-block"><span class="s" style="display:inline-block;cursor:pointer;border:1px solid #8886;border-radius:8px;padding:9px 14px">Mentési csomag betöltése</span><input id="imp" type="file" accept=".zip" hidden></label></p>
-<p><button class="s" id="bkn">Biztonsági mentés most a Google Drive-ra</button> <label style="display:inline-flex;gap:6px;align-items:center;margin:0"><input type="checkbox" id="bkon" style="width:auto;margin:0"> Hetente automatikusan</label></p><p class="note" id="bks"></p><p class="note">A Drive-on a „Nissan ajánlat mentések” mappába kerül, az utolsó 8 mentés marad meg. Visszatöltés: töltsd le a zip fájlt a Drive-ról, majd „Mentési csomag betöltése”.</p></fieldset><fieldset><legend>SZINKRON A GÉPEK KÖZÖTT</legend><p class="note">Az otthoni és a munkahelyi gép ugyanazokat az adatokat látja: előzmények, státuszok, mai teendők, teljesítmény és beállítások. Az adatok a saját Google Drive-od „Nissan ajánlat szinkron” mappájába kerülnek, a Google kapcsolaton keresztül. A program induláskor, minden változás után és 3 percenként szinkronizál. A PIN kód gépenként külön marad, nem kerül fel. Az ajánlatszámot a két gép közösen számolja, így nem lesz kétszer ugyanaz (ha épp nincs internet, a gép a saját számlálóját használja). A saját feltöltött autóképek nem szinkronizálódnak, azokat a mentési csomag viszi át.</p><p><button class="s" id="syn">Szinkron most</button> <label style="display:inline-flex;gap:6px;align-items:center;margin:0"><input type="checkbox" id="syon" style="width:auto;margin:0"> Bekapcsolva ezen a gépen</label></p><p class="note" id="sys"></p><div id="mobsec"><h4 style="margin:14px 0 6px">Telefonos app</h4><p class="note">A telefonnal (Chrome) olvasd be ezt a QR kódot. Megnyílik az app, és magától összekapcsolódik a szinkronnal. Utána a Chrome menüjében: <b>Telepítés</b> vagy <b>Hozzáadás a kezdőképernyőhöz</b>, így Nissan ikonnal, teljes képernyőn indul. A QR kód a titkos kulcsodat tartalmazza: ne mutasd meg másnak, és ne fényképezd le.</p><p style="display:flex;gap:14px;align-items:center;flex-wrap:wrap"><img id="mobqr" alt="QR kód a telefonos apphoz" style="width:150px;height:150px;image-rendering:pixelated;background:#fff;border-radius:6px"><a id="mobu" target="_blank" rel="noopener" style="word-break:break-all;font-size:13px"></a></p><p class="note" id="mobs"></p></div></fieldset>
+<p><button class="s" id="bkn">Biztonsági mentés most a Google Drive-ra</button> <label style="display:inline-flex;gap:6px;align-items:center;margin:0"><input type="checkbox" id="bkon" style="width:auto;margin:0"> Hetente automatikusan</label></p><p class="note" id="bks"></p><p class="note">Adatmegőrzés: az ügyféladatokat 1 évig őrzi a program. Ami az ajánlat napjától (szerződésnél a szerződés napjától) 1 évnél régebbi, automatikusan és véglegesen törlődik minden eszközről, a szinkronból, a Google táblából, a naptárból és a Drive mentésekből is.</p><p class="note">A Drive-on a „Nissan ajánlat mentések” mappába kerül, az utolsó 8 mentés marad meg. Visszatöltés: töltsd le a zip fájlt a Drive-ról, majd „Mentési csomag betöltése”.</p></fieldset><fieldset><legend>SZINKRON A GÉPEK KÖZÖTT</legend><p class="note">Az otthoni és a munkahelyi gép ugyanazokat az adatokat látja: előzmények, státuszok, mai teendők, teljesítmény és beállítások. Az adatok a saját Google Drive-od „Nissan ajánlat szinkron” mappájába kerülnek, a Google kapcsolaton keresztül. A program induláskor, minden változás után és 3 percenként szinkronizál. A PIN kód gépenként külön marad, nem kerül fel. Az ajánlatszámot a két gép közösen számolja, így nem lesz kétszer ugyanaz (ha épp nincs internet, a gép a saját számlálóját használja). A saját feltöltött autóképek nem szinkronizálódnak, azokat a mentési csomag viszi át.</p><p><button class="s" id="syn">Szinkron most</button> <label style="display:inline-flex;gap:6px;align-items:center;margin:0"><input type="checkbox" id="syon" style="width:auto;margin:0"> Bekapcsolva ezen a gépen</label></p><p class="note" id="sys"></p><div id="mobsec"><h4 style="margin:14px 0 6px">Telefonos app</h4><p class="note">A telefonnal (Chrome) olvasd be ezt a QR kódot. Megnyílik az app, és magától összekapcsolódik a szinkronnal. Utána a Chrome menüjében: <b>Telepítés</b> vagy <b>Hozzáadás a kezdőképernyőhöz</b>, így Nissan ikonnal, teljes képernyőn indul. A QR kód a titkos kulcsodat tartalmazza: ne mutasd meg másnak, és ne fényképezd le.</p><p style="display:flex;gap:14px;align-items:center;flex-wrap:wrap"><img id="mobqr" alt="QR kód a telefonos apphoz" style="width:150px;height:150px;image-rendering:pixelated;background:#fff;border-radius:6px"><a id="mobu" target="_blank" rel="noopener" style="word-break:break-all;font-size:13px"></a></p><p class="note" id="mobs"></p></div></fieldset>
 </section>
 <section id="p3"><fieldset><legend>TELJESÍTMÉNY</legend><div class="g" style="margin-bottom:12px"><label>Év<select id="pfy"></select></label></div><div class="kpi" id="pfk"></div><div style="overflow-x:auto"><table class="pf" id="pft"></table></div><p class="note">Ajánlat: a hónapban kiadott ajánlatok. Szerződés: a hónapban kötött szerződések és azok értéke. Arány: a hónap ajánlataiból hány lett szerződés (a később kötött szerződésekkel együtt). A szerződést az Előzmények fülön jelölheted. Itt ennek a készüléknek az adatai látszanak. Ha a Google kapcsolat be van állítva, a táblázat és a havi e-mail minden készülék adatát együtt mutatja.</p></fieldset></section>
 <section id="p2"><fieldset><legend>KÉSZÍTETT AJÁNLATOK</legend><label>Keresés<input id="hq" placeholder="név, autó vagy ajánlatszám"></label><p class="note" id="hn"></p><div id="hlist"></div></fieldset></section></main><div id="msg"></div><div id="lock"><div class="box"><img id="lockimg" alt="Nissan"><div style="font-weight:700;font-size:17px">Ajánlatkészítő</div><input id="pinin" type="password" inputmode="numeric" autocomplete="off" maxlength="8" aria-label="PIN kód"><button class="b" id="pinok">Belépés</button><p id="pinmsg">Add meg a PIN kódot</p></div></div>
@@ -325,7 +325,7 @@ async function syNow(manual){
    fixCfg();o.cu=rcu;o.cs=syHash(JSON.stringify(syCfgC()));o.cd=0;cfgCh=1}}
   const rc=Math.floor(+r.cnt)||0;let cntCh=0;if(rc>(cfg.counter||0)&&rc<=99999999){const v=$('no').value,auto=/^AJ-\d{4}-\d+$/.test(v)&&+v.split('-')[2]===(cfg.counter||0)+1;cfg.counter=rc;cntCh=1;if(auto)$('no').value='AJ-'+new Date().getFullYear()+'-'+String(rc+1).padStart(4,'0')}
   o.rev=+r.rev||o.rev;o.last=Date.now();o.err='';sySet(o);if(cfgCh||cntCh)save();
-  if(nH||nS){try{if($('t2').classList.contains('on'))hist();if($('t3').classList.contains('on'))perf();todo()}catch(e){}}
+  if(nH||nS){try{oregTorol()}catch(e){}try{if($('t2').classList.contains('on'))hist();if($('t3').classList.contains('on'))perf();todo()}catch(e){}}
   if(cfgCh){try{SF.forEach(([k])=>{const i=$('c_'+k);if(i&&document.activeElement!==i)i.value=cfg[k]});if($('cat')&&document.activeElement!==$('cat')&&$('sf').children.length)$('cat').value=JSON.stringify(cfg.models,null,1);bkStat()}catch(e){}}
   if(manual)msg(nH||nS||cfgCh?'Szinkron kész, a másik gép változásai betöltve':'Szinkron kész, minden naprakész');else if(nH&&since)msg('Szinkron: '+nH+' ajánlat frissült a másik gépről');else if(nH)msg('Szinkron kész: a másik gép ajánlatai is itt vannak');
   if(syPend())sySoon()}
@@ -529,7 +529,7 @@ $('imp').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{const z=a
  {const h=z.file('elozmenyek.json');if(h){try{hset(JSON.parse(await h.async('string')))}catch(e){}}}
  {const h=z.file('statisztika.json');if(h){try{const a=JSON.parse(await h.async('string'));if(Array.isArray(a)){const mp=new Map((sget()||[]).map(x=>[x.id,x]));a.forEach(x=>{if(x&&x.id)mp.set(x.id,x)});sset([...mp.values()].sort((p,q)=>q.id-p.id))}}catch(e){}}}
  for(const n of Object.keys(z.files)){const mt=n.match(/^kepek\/(.+)\.(png|jpe?g)$/i);if(mt)await iput(mt[1],'data:image/'+(mt[2].toLowerCase()=='png'?'png':'jpeg')+';base64,'+await z.files[n].async('base64'))}
- msg('Betöltve');setTimeout(()=>location.reload(),700)}catch(er){msg('A fájl nem olvasható')}};
+ try{oregTorol()}catch(e){}msg('Betöltve');setTimeout(()=>location.reload(),700)}catch(er){msg('A fájl nem olvasható')}};
 const cyrb=(str,seed=0)=>{let h1=0xdeadbeef^seed,h2=0x41c6ce57^seed;for(let i=0,ch;i<str.length;i++){ch=str.charCodeAt(i);h1=Math.imul(h1^ch,2654435761);h2=Math.imul(h2^ch,1597334677)}h1=Math.imul(h1^(h1>>>16),2246822507)^Math.imul(h2^(h2>>>13),3266489909);h2=Math.imul(h2^(h2>>>16),2246822507)^Math.imul(h1^(h1>>>13),3266489909);return(h2>>>0&0x1fffff).toString(16)+(h1>>>0).toString(16).padStart(8,'0')};
 const pinHash=p=>{let h='nissan-ajanlat|'+p;for(let i=0;i<3000;i++)h=cyrb(h+'|'+p,i);return h};
 const pinOn=()=>cfg.pinon!==false&&!!cfg.pinh;
@@ -603,6 +603,21 @@ async function bkRun(manual){if(bkRun.busy)return;if(!gasOk()){if(manual)msg('Eh
 $('bkn').onclick=()=>bkRun(true);$('bkon').onchange=()=>{cfg.bkOn=$('bkon').checked;save();bkStat()};$('t1').addEventListener('click',bkStat);bkStat();
 setTimeout(()=>{try{if(gasOk()&&cfg.bkOn!==false&&Date.now()-(+cfg.bkLast||0)>7*864e5&&hget().length)bkRun(false)}catch(e){}},15000);
 
+/* v37: adatmegőrzés 1 év. Ami az ajánlat napjától (szerződésnél a szerződés napjától) számítva 365 napnál régebbi, ezen az eszközön végleg törlődik.
+ * Csak helyben töröl (nem küld törlési jelet): a szinkronból, a táblából, a naptárból és a Drive mentésekből a Google szkript törli éjjelente a saját órája szerint,
+ * és onnan a többi eszközre is törlési jel megy. Így egy rosszul beállított órájú eszköz sem tudja máshol törölni az adatokat. */
+const ORNAP=365;
+function oregTorol(){try{const hat=ymd(new Date(Date.now()-ORNAP*864e5)),re=/^\d{4}-\d{2}-\d{2}$/,regi=(d,sd)=>{d=re.test(d||'')?d:'';sd=re.test(sd||'')?sd:'';const m=sd>d?sd:d;return !!m&&m<hat};
+ const H=hget(),S=sget(),SM=new Map((S||[]).map(x=>[x.id,x])),ki=new Set();
+ (S||[]).forEach(x=>{if(regi(x.d,x.sd))ki.add(x.id)});
+ H.forEach(x=>{if(!x||typeof x.id!=='number'||!isFinite(x.id)||SM.has(x.id))return;if(regi(ymd(new Date(x.id)),''))ki.add(x.id)});
+ if(!ki.size)return 0;
+ hset0(H.filter(x=>!ki.has(x&&x.id)));if(S)sset0(S.filter(x=>!ki.has(x.id)));
+ const o=syGet();ki.forEach(id=>{delete o.dh[id];delete o.ds[id]});if(o.hi)o.sh=sySigs('h',hget());if(o.si)o.ss=sySigs('s',sget()||[]);sySet(o);
+ try{if($('t2').classList.contains('on'))hist();if($('t3').classList.contains('on'))perf();todo()}catch(e){}
+ return ki.size}catch(e){return 0}}
+setTimeout(oregTorol,2000);setInterval(oregTorol,6*36e5);
+
 /* v31: árlista dátuma a jobb felső sarokban, heti nissan.hu figyelés a Google kapcsolaton keresztül */
 const PLI={d:'2026.11.09',t:Date.parse('2026-11-23T00:00:00+01:00'),m:[['Qashqai','2026','2026.11.09'],['Qashqai','2025. nov','2026.11.09'],['X-Trail','2026','2026.09.24'],['X-Trail','2025','2026.09.24'],['Juke','2026','2026.11.09'],['Juke','2025','2026.09.24'],['Micra','','2026.11.09'],['Leaf','2026. okt','2026.11.09'],['Leaf','2026-os','2026.11.09']]};
 const plFor=m=>{if(!m)return '';const r=PLI.m.find(([n,y])=>n===m.name&&String(m.my||'').indexOf(y)===0);return r?r[2]:''};
@@ -648,7 +663,7 @@ const appKey=()=>{try{const m=/[#&]k=([0-9a-f]{32})/.exec(location.hash);if(m){c
 if(IS_APP){appKey();window.addEventListener('hashchange',appKey);
  try{if('serviceWorker' in navigator&&(location.protocol==='https:'||location.hostname==='localhost'))navigator.serviceWorker.register('sw.js').catch(()=>{})}catch(e){}}
 </script>
-<script type="text/plain" id="gascode">/* Nissan ajánlatkészítő v36, Google kapcsolat (Nyitrai Autóház)
+<script type="text/plain" id="gascode">/* Nissan ajánlatkészítő v37, Google kapcsolat (Nyitrai Autóház)
  * Feladata: 1) az ajánlat után naptári esemény a saját Google Naptárba,
  * 2) minden ajánlat és szerződés naplózása egy Google Táblázatba,
  * 2b) utánkövetés: a visszahívás után két további naptári esemény, ha nincs szerződés (szerződésnél, elveszettnél törlődnek),
@@ -657,11 +672,14 @@ if(IS_APP){appKey();window.addEventListener('hashchange',appKey);
  * 5) heti biztonsági mentés a Google Drive "Nissan ajánlat mentések" mappájába (az utolsó 8 marad meg),
  * 6) hétfőnként reggel 6-kor megnézi a nissan.hu árlista oldalát, és jelzi az appnak, ha új vagy megváltozott árlista PDF jelent meg (az árakat nem írja át),
  * 7) szinkron a gépek között: előzmények, státuszok és beállítások a Drive "Nissan ajánlat szinkron" mappájában (a PIN kivételével), közös ajánlatszám számláló (v36: a tábla és a szinkron legnagyobb számától folytatja, minden eszköz innen kap számot),
+ * 9) v37 adatmegőrzés: ami az ajánlat napjától (szerződésnél a szerződés napjától) 1 évnél régebbi, minden éjjel 3-kor végleg törlődik
+ *    a táblából, a naptárból, a szinkronból (így minden eszközről) és a Drive mentésekből is.
  * 8) mobil: egy külön, csak a tulajdonosnak elérhető bevezetés (Hozzáférés: csak én) a böngészőben megnyitja a programot a Drive-ról.
  * Beállítás: futtasd egyszer a "beallitas" függvényt, majd tedd közzé webalkalmazásként
  * (Végrehajtás: én, Hozzáférés: bárki). A kapott /exec címet másold az app Beállításaiba. */
 var TZ = 'Europe/Budapest';
 var KULCS = ''; /* titkos kulcs: csak az ajánlatkészítő ismeri */
+var MEGORZES_NAP = 365; /* v37: ennyi napig őrizzük az ügyféladatokat */
 var FEJ = ['ID','Ajánlat dátuma','Ajánlatszám','Ügyfél','Telefon','E-mail','Autó','Bruttó ár (Ft)','Érvényes','Státusz','Szerződés dátuma','Visszahívás','Naptár esemény','Utánkövetés esemény','Utánkövetés 2 esemény'];
 
 function beallitas() {
@@ -670,6 +688,7 @@ function beallitas() {
   ScriptApp.newTrigger('haviJelentes').timeBased().onMonthDay(1).atHour(7).inTimezone(TZ).create();
   ScriptApp.getProjectTriggers().forEach(function (t) { if (t.getHandlerFunction() === 'arlistaFigyeles') ScriptApp.deleteTrigger(t); });
   ScriptApp.newTrigger('arlistaFigyeles').timeBased().onWeekDay(ScriptApp.WeekDay.MONDAY).atHour(6).inTimezone(TZ).create();
+  torlesIdozito_();
   try { arlistaFigyeles(); } catch (x) { Logger.log('Árlista ellenőrzés: ' + x); }
   CalendarApp.getDefaultCalendar();
   MailApp.getRemainingDailyQuota();
@@ -736,6 +755,7 @@ function doPost(e) {
     lock.waitLock(25000); zarva = true;
     var d = JSON.parse(e && e.postData && e.postData.contents || '{}'), sh = lap_();
     if (KULCS && String(d.k || '') !== KULCS) { Utilities.sleep(1500); return valasz_({ ok: false, err: 'hibás kulcs' }); }
+    try { torlesIdozito_(); } catch (x) {}
     if (d.a === 'ping') return valasz_({ ok: true, sheet: sh.getParent().getUrl() });
     if (d.a === 'quote') {
       if (!d.id) return valasz_({ ok: false, err: 'nincs azonosító' });
@@ -803,8 +823,8 @@ function doPost(e) {
       mappa.createFile(Utilities.newBlob(Utilities.base64Decode(String(d.zip)), 'application/zip', nev));
       var fajlok = [], it = mappa.getFiles();
       while (it.hasNext()) fajlok.push(it.next());
-      fajlok.sort(function (a, b) { return b.getDateCreated().getTime() - a.getDateCreated().getTime(); });
-      fajlok.slice(8).forEach(function (x) { x.setTrashed(true); });
+      fajlok.sort(function (a, b) { return mentesIdo_(b) - mentesIdo_(a); });
+      fajlok.slice(8).forEach(function (x) { vegleg_(x); });
       return valasz_({ ok: true, url: mappa.getUrl(), name: nev, db: Math.min(8, fajlok.length) });
     }
     if (d.a === 'delete') {
@@ -887,6 +907,7 @@ function szinkron_(d) {
     ['h', 's'].forEach(function (k) { var e = o[k][id]; if (e && (Number(e.x.u) || 0) <= o.del[id].t) { delete o[k][id]; valt = true; } });
     if (most - o.del[id].t > 400 * 864e5) { delete o.del[id]; valt = true; }
   });
+  if (regiSzinkTorol_(o, rev, most)) valt = true;
   [['h', 300], ['s', 5000]].forEach(function (p) {
     var ids = Object.keys(o[p[0]]); if (ids.length <= p[1]) return;
     ids.sort(function (a, b) { return Number(b) - Number(a); }).slice(p[1]).forEach(function (id) { delete o[p[0]][id]; }); valt = true;
@@ -903,6 +924,101 @@ function szinkron_(d) {
   Object.keys(o.del).forEach(function (id) { if (o.del[id].r > since) ki.del[id] = o.del[id].t; });
   if (o.cfg && (Number(o.cfgR) || 0) > since) ki.cfg = o.cfg;
   return ki;
+}
+
+/* v37: adatmegőrzés. Egy rekord akkor régi, ha az ajánlat napja és (ha van) a szerződés napja közül a későbbi is
+ * MEGORZES_NAP napnál régebbi. A régi rekord mindenhonnan végleg törlődik. */
+function hatar_() { return Utilities.formatDate(new Date(new Date().getTime() - MEGORZES_NAP * 864e5), TZ, 'yyyy-MM-dd'); }
+function regi_(d, sd, hat) {
+  var re = /^\d{4}-\d{2}-\d{2}$/; d = re.test(d || '') ? d : ''; sd = re.test(sd || '') ? sd : '';
+  var m = sd > d ? sd : d; return !!m && m < (hat || hatar_());
+}
+function idNap_(id) { var n = Number(id); return n > 1e12 && n < 1e14 ? Utilities.formatDate(new Date(n), TZ, 'yyyy-MM-dd') : ''; }
+/* a szinkron fájl régi rekordjai: törlés + törlési jel (így a többi eszköz is törli a sajátját) */
+function regiSzinkTorol_(o, rev, most) {
+  var hat = hatar_(), ki = {}, valt = false;
+  Object.keys(o.s).forEach(function (id) { var x = o.s[id].x || {}; if (regi_(x.d || idNap_(id), x.sd, hat)) ki[id] = 1; });
+  Object.keys(o.h).forEach(function (id) { if (!o.s[id] && regi_(idNap_(id), '', hat)) ki[id] = 1; });
+  Object.keys(ki).forEach(function (id) {
+    delete o.h[id]; delete o.s[id];
+    if (/^\d{1,16}$/.test(id) && (!o.del[id] || o.del[id].t < most)) o.del[id] = { t: most, r: rev };
+    valt = true;
+  });
+  return valt;
+}
+function vegleg_(f) {
+  try {
+    var r = UrlFetchApp.fetch('https://www.googleapis.com/drive/v3/files/' + f.getId(), { method: 'delete', headers: { Authorization: 'Bearer ' + ScriptApp.getOAuthToken() }, muteHttpExceptions: true });
+    if (r.getResponseCode() < 300) return true;
+  } catch (x) {}
+  try { f.setTrashed(true); } catch (x) {}
+  return false;
+}
+function mentesIdo_(f) { var m = /t=(\d{10,14})/.exec(f.getDescription() || ''); return m ? Number(m[1]) : f.getDateCreated().getTime(); }
+/* egy mentés ZIP-ből kiveszi a régi előzményeket és statisztikát; ha volt mit, új fájlt tesz a helyére, a régit véglegesen törli */
+function mentesTisztit_(f, hat) {
+  var blobs = Utilities.unzip(f.getBlob().setContentType('application/zip')), valt = false, sMap = {};
+  var olv = function (b) { try { var a = JSON.parse(b.getDataAsString('UTF-8')); return Array.isArray(a) ? a : null; } catch (x) { return null; } };
+  blobs.forEach(function (b) { if (b.getName() === 'statisztika.json') { var a = olv(b); if (a) a.forEach(function (x) { if (x && x.id) sMap[String(x.id)] = x; }); } });
+  var uj = blobs.map(function (b) {
+    var n = b.getName();
+    if (n !== 'elozmenyek.json' && n !== 'statisztika.json') return b;
+    var a = olv(b); if (!a) return b;
+    var m = a.filter(function (x) {
+      if (!x || typeof x !== 'object') return true;
+      var s = n === 'statisztika.json' ? x : sMap[String(x.id)];
+      return !(s ? regi_(s.d || idNap_(x.id), s.sd, hat) : regi_(idNap_(x.id), '', hat));
+    });
+    if (m.length === a.length) return b;
+    valt = true; return Utilities.newBlob(JSON.stringify(m), 'application/json', n);
+  });
+  if (!valt) return false;
+  var t = mentesIdo_(f), p = f.getParents(), mappa = p.hasNext() ? p.next() : null; if (!mappa) return false;
+  var nf = mappa.createFile(Utilities.zip(uj, f.getName()));
+  nf.setDescription('t=' + t + ' (régi adatok törölve ' + nap_(new Date()) + ')');
+  vegleg_(f);
+  return true;
+}
+/* minden éjjel 3-kor: a régi adatok végleges törlése mindenhonnan */
+function regiAdatTorles() {
+  var lock = LockService.getScriptLock(); lock.waitLock(60000);
+  var hat = hatar_(), db = { tabla: 0, naptar: 0, szinkron: 0, mentes: 0 };
+  try {
+    var sh = lap_(), n = sh.getLastRow();
+    if (n > 1) {
+      var v = sh.getRange(2, 1, n - 1, 15).getValues();
+      for (var i = v.length - 1; i >= 0; i--) {
+        var r = v[i], d = nap_(r[1]) || idNap_(r[0]);
+        if (!regi_(d, nap_(r[10]), hat)) continue;
+        [12, 13, 14].forEach(function (c) { if (r[c]) { try { var ev = CalendarApp.getEventById(String(r[c])); if (ev) { ev.deleteEvent(); db.naptar++; } } catch (x) {} } });
+        sh.deleteRow(i + 2); db.tabla++;
+      }
+    }
+    var f = szinkFajl_(), o = szinkOlvas_(f), most = new Date().getTime(), h0 = Object.keys(o.h).length + Object.keys(o.s).length;
+    if (regiSzinkTorol_(o, o.rev + 1, most)) {
+      db.szinkron = h0 - Object.keys(o.h).length - Object.keys(o.s).length;
+      o.rev = o.rev + 1; o.t = most; f.setContent(JSON.stringify(o));
+    }
+    var mid = PropertiesService.getScriptProperties().getProperty('MENTES_MAPPA');
+    if (mid) {
+      try {
+        var it = DriveApp.getFolderById(mid).getFiles(), fl = [];
+        while (it.hasNext()) fl.push(it.next());
+        fl.forEach(function (x) { try { if (mentesTisztit_(x, hat)) db.mentes++; } catch (e) { Logger.log('Mentés tisztítás: ' + x.getName() + ': ' + e); } });
+      } catch (x) {}
+    }
+  } finally { lock.releaseLock(); }
+  PropertiesService.getScriptProperties().setProperty('TORLES_UTOLSO', JSON.stringify({ t: new Date().getTime(), hat: hat, db: db }));
+  Logger.log('Régi adatok törölve (' + hat + ' előttiek): ' + JSON.stringify(db));
+  return db;
+}
+/* az éjszakai törlés időzítője: beallitas() és az első kérés is létrehozza, ha még nincs */
+function torlesIdozito_() {
+  var ps = PropertiesService.getScriptProperties();
+  if (ps.getProperty('TORLES_IDOZITO') === '37') return;
+  var van = ScriptApp.getProjectTriggers().some(function (t) { return t.getHandlerFunction() === 'regiAdatTorles'; });
+  if (!van) ScriptApp.newTrigger('regiAdatTorles').timeBased().everyDays(1).atHour(3).inTimezone(TZ).create();
+  ps.setProperty('TORLES_IDOZITO', '37');
 }
 
 function doPostQuote_(sh, d) {
