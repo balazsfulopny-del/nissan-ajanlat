@@ -1223,6 +1223,6 @@ function arlistaFigyeles() {
  document.getElementById('bat').onclick=()=>bAtvesz(true);
  if(sbOk()&&!localStorage.getItem('nb_google'))setTimeout(()=>bAtvesz(false),3500);
  document.getElementById('sbout').onclick=async()=>{await sbKi();sbUi();syStat();msg('Kiléptél ezen az eszközön')};
- sbUi();try{syStat()}catch(e){}})();
+ sbUi();try{syStat()}catch(e){}try{mobStat()}catch(e){}})();
 </script>
 </body></html>
